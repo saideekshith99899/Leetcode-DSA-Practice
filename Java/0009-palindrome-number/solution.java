@@ -1,19 +1,15 @@
-import java.lang.*;
 class Solution {
     public boolean isPalindrome(int x) {
-        int sum=0;
-        int u=x;
-        if(u<0)
-        {
+
+        String s =String.valueOf(x);
+        int n =s.length();
+
+        for(int i=0; i< n/2 ;i++){
+            if(s.charAt(i) !=s.charAt(n-i-1)) 
             return false;
         }
-        while(x>0)
-        {
-            int rem=x%10;
-            sum=(sum*10)+rem;
-            x/=10;
-        }
-        return sum==u;
-     
+
+        return true;
     }
 }
+        
