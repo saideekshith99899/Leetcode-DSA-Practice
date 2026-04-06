@@ -1,26 +1,46 @@
 class Solution {
     public int characterReplacement(String s, int k) {
 
-        int[] arr = new int[26];
-        int count=0;
-        int start=0;
-        int maxlen=0;
+        HashMap<Character, Integer> map = new HashMap<>();
 
-        for(int end=0;end<s.length();end++){
+        int maxfreq = 0;
+        int left = 0;
+        int maxlen = 0;
 
-            arr[s.charAt(end)-'A']++;
+        for(int right = 0; right < s.length(); right++) {
 
-            count = Math.max(count,arr[s.charAt(end)-'A']);
+            char ch = s.charAt(right);
 
-            if(end - start +1  - count > k){
-                arr[s.charAt(start) - 'A']--;
-                start++;
+            // cout chars in hashmap
+            if(map.containsKey(ch)) {
+
+                map.put(ch, map.get(ch)+1);
+
+            }
+            else{
+                map.put(ch,1);
             }
 
-            maxlen = Math.max(maxlen,end-start+1);
 
+            // max freq find
+
+            maxfreq = Math.max(maxfreq, map.get(ch));
+
+            // sliding window apply
+
+            while((right - left + 1) - maxfreq > k){
+            
+            char leftchar = s.charAt(left);
+            map.put(leftchar , map.get(leftchar) - 1);
+            left++;
+
+
+            }
+            maxlen = Math.max(maxlen, right-left+1);
         }
 
         return maxlen;
+
+        
     }
 }
