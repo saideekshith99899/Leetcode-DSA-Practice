@@ -1,28 +1,26 @@
 class Solution {
     public String removeOuterParentheses(String s) {
 
-        int balance =0;
-        int start =0;
-        StringBuilder  result = new StringBuilder();
-
-        for(int i=0;i<s.length();i++){
-
-            char c = s.charAt(i);
-            if(c== '('){
-                balance++;
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+        for(int i=0; i<s.length(); i++) {
+            char ch = s.charAt(i);
+        if(ch == '(') {
+            count++;
+            if(count == 1) {
+                continue;
             }
-            else
-            {
-                balance--;
+            else{
+                sb.append(ch);
             }
-
-            if(balance==0){
-                result.append(s.substring(start +1 ,i));
-                start=1+i;
-            }
-
         }
-        return result.toString();
-        
+        else{     // ch == ')'
+            if(count!=1){
+                sb.append(ch);
+            }
+            count--;
+        }          
+        }
+        return sb.toString();
     }
 }
