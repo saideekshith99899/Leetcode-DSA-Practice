@@ -9,22 +9,17 @@
  *     }
  * }
  */
- import java.util.*;
 public class Solution {
     public ListNode detectCycle(ListNode head) {
-
-
-        HashSet <ListNode> st = new HashSet<>();
-        while(head!=null){
-            if(st.contains(head))
-            return head;
-
-            st.add(head);
-            head=head.next;
+        ListNode temp = head;
+        HashSet<ListNode> set = new HashSet<>();
+        while(temp != null) {
+            if(set.contains(temp)){
+                return temp;
+            }
+            set.add(temp);
+            temp = temp.next;
         }
-
         return null;
-
     }
 }
-
