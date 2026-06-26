@@ -8,46 +8,28 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-public class Solution {
+class Solution {
     public boolean isPalindrome(ListNode head) {
-      
-
-        ListNode fast = head;
-        ListNode slow = head;
-
-       
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-   
-        ListNode reversedSecondHalf = reverse(slow);
-
-   
-        while (reversedSecondHalf != null) {
-            if (head.val != reversedSecondHalf.val) {
-                return false;
-            }
-            head = head.next;
-            reversedSecondHalf = reversedSecondHalf.next;
-        }
-
-        return true;
+    int count  = 0;
+    ListNode temp = head;
+    while(temp != null) {
+        count++;
+        temp = temp.next;
     }
-
-    private ListNode reverse(ListNode head) {
-        ListNode prev = null;
-        ListNode current = head;
-
-        while (current != null) {
-            ListNode next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
+    int n = count;
+    int[] nums = new int[n];
+    temp = head;
+    for(int i=0; i<n; i++) {
+        nums[i] = temp.val;
+        temp = temp.next;
+    }
+    int j = n - 1;
+    for(int i= 0 ;i<n; i++) {
+        if(nums[i] != nums[j]){
+            return false;
         }
-
-        return prev;
+        j--;
+    } 
+    return true;
     }
 }
-
