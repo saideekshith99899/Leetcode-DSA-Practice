@@ -15,22 +15,23 @@
  */
 class Solution {
     public boolean isSymmetric(TreeNode root) {
+        if(root == null) return true;
 
-        if(root ==null){
-            return true;
-        }
-        return sym(root.left,root.right);
+        TreeNode leftsubtree = root.left;
+        TreeNode rightsubtree = root.right;
+    return helper(leftsubtree,rightsubtree);
+
     }
 
-    private boolean sym(TreeNode node1 , TreeNode node2){
-        if(node1 == null && node2 ==null){
-            return true;
-        }
+    public boolean helper(TreeNode p, TreeNode q){
+        if(p == null && q == null) return true;
+        if(p == null && q != null) return false;
+        if(p != null && q == null) return false;
 
-        if(node1 == null || node2 == null){
-            return false;
+        if(p.val == q.val){
+            return helper(p.left,q.right) && helper(p.right,q.left);
         }
-
-        return ((node1.val == node2.val) && sym(node1.left,node2.right) && sym(node1.right,node2.left));
+        return false;
     }
+
 }
