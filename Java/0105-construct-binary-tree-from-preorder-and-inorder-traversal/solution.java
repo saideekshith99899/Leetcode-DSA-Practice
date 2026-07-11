@@ -15,25 +15,25 @@
  */
 class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        int n = preorder.length - 1;
-       return helper(preorder,0,n,inorder,0,n);     
+    HashMap<Integer, Integer> inmap = new HashMap<>();
+    for(int i=0; i<inorder.length; i++){
+
+        inmap.put(inorder[i],i);
+    }
+    int n = inorder.length-1;
+    TreeNode root = BuildTree(preorder,0,n,inorder,0,n,inmap);
+    return root;
     }
 
-    public TreeNode helper(int[] preorder, int prelow, int prehigh , int[] inorder, int inlow, int inhigh) {
-        if(prelow > prehigh) return null;
-        int rootval = preorder[prelow];
-        TreeNode root = new TreeNode(rootval);
-        int inRootIndex = -1;
-        for(int i=inlow; i<=inhigh; i++) {
-            if(inorder[i] == rootval) {
-               inRootIndex = i; // found i.e rootindex
-                break;
-            }
-        }
-       int leftsize = inRootIndex - inlow;      
-       root.left= helper(preorder,prelow + 1, prelow + leftsize, inorder,inlow, inRootIndex-1);
-       root.right = helper(preorder, prelow + leftsize + 1, prehigh, inorder,inRootIndex+1,inhigh);
-        return root;
+    public TreeNode  BuildTree(int[] preorder, int preLow, int preEnd, int[] inorder,int inLow, int inEnd, HashMap<Integer, Integer> inmap) {
 
+        if(preLow > preEnd) return null;
+        TreeNode root = new TreeNode(preorder[preLow]);
+        int inRoot = inmap.get(root.val);
+        int numsLeft = inRoot - inLow;
+        root.left = BuildTree(preorder, preLow+1, preLow+numsLeft, inorder, inLow, inRoot-1,inmap);
+        root.right = BuildTree(preorder, preLow+numsLeft+1, preEnd, inorder, inRoot+1, inEnd, inmap);
+
+        return root;
     }
 }
