@@ -10,24 +10,15 @@
 
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        
-        if(root == null || root == p || root == q){
-            return root;
+        while (root != null) {
+            if (p.val < root.val && q.val < root.val) {
+                root = root.left;       // both in left subtree
+            } else if (p.val > root.val && q.val > root.val) {
+                root = root.right;      // both in right subtree
+            } else {
+                return root;            // split point or one is root
+            }
         }
-
-        TreeNode left = lowestCommonAncestor(root.left,p,q);
-        TreeNode right = lowestCommonAncestor(root.right,p,q);
-
-        if(left==null){
-            return right;
-        }
-
-        else if(right == null){
-            return left;
-        }
-
-        else{
-            return root;
-        }
+        return null;
     }
 }
