@@ -10,29 +10,13 @@
  */
 class Solution {
     public ListNode reverseList(ListNode head) {
-        ListNode temp = head;
-        int count = 0;
-        while(temp != null) {
-            count++;
-            temp = temp.next;
-        }
+       if(head == null) return head;
+       if(head.next == null) return head;
 
-        int[] result = new int[count];
-        temp = head;
-        for(int i= 0; i< count; i++) {
-            result[i] = temp.val;  
-            temp = temp.next;
-        }
-
-        ListNode dummy = new ListNode();
-        ListNode current = dummy;
-
-        for(int i= count -1; i>=0; i--) {
-        current.next= new ListNode(result[i]);
-        current = current.next;
-        }
-
-        return dummy.next;
+       ListNode newNode =  reverseList(head.next);
+       head.next.next = head;
+       head.next = null;
+       return newNode;
 
     }
 }
