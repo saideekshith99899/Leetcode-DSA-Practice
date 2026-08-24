@@ -1,22 +1,21 @@
 class Solution {
     public List<List<Integer>> subsets(int[] nums) {
-        int n = nums.length;
-        List<List<Integer>> result =  new ArrayList<>();
-
-        int total = 1<<n;
-
-        for (int i = 0; i < total; i++) {
-            List<Integer> subset = new ArrayList<>();
-            for (int j = 0; j < n; j++) {
-                if ((i & (1 << j)) != 0) {
-                    subset.add(nums[j]);
-                }
-            }
-            result.add(subset);
-        }
-        
-        return result;
+        List<List<Integer>> allsubsets = new ArrayList<>();
+        ArrayList<Integer> current = new ArrayList<>();
+        printsubset(nums,allsubsets,current,0);
+        return allsubsets;
     }
+    public void printsubset(int[] nums,List<List<Integer>> allsubsets ,ArrayList<Integer> current , int i) {
         
-    
+        if(i == nums.length) {
+            allsubsets.add(new ArrayList<>(current));
+            return;
+        }
+        // include 
+        current.add(nums[i]);
+        printsubset(nums,allsubsets,current,i+1);
+        //exclude
+        current.remove(current.size()-1);  // backtracking - undo
+        printsubset(nums,allsubsets,current,i+1);
+    }
 }
