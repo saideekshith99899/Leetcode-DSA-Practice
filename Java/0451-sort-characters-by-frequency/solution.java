@@ -1,41 +1,39 @@
+class pair implements Comparable<pair> {
+    int freq;
+    char ch;
+
+    pair(char ch , int freq) {
+        this.ch = ch;
+        this.freq = freq;
+    }
+
+    public int compareTo(pair t){
+        return this.freq - t.freq;
+    }
+}
 class Solution {
     public String frequencySort(String s) {
-        HashMap<Character, Integer> map = new HashMap<>();
-
-        for(int i=0;i < s.length(); i++) {
-
+        HashMap<Character,Integer> map = new HashMap<>();
+        for(int i = 0; i<s.length(); i++) {
             char ch = s.charAt(i);
-            if(map.containsKey(ch)) {
+            map.put(ch, map.getOrDefault(ch,0)+1);
+        }
+        // max heap
+        PriorityQueue<pair> pq = new PriorityQueue<>(Collections.reverseOrder());
 
-                map.put(ch, map.get(ch) + 1);
-            }
-            else{
-                map.put(ch,1);
-            }
+        for(char ch: map.keySet()) {
+            pq.add(new pair(ch,map.get(ch)));
         }
 
-
-        List<Character> list = new ArrayList<>(map.keySet());
-
-        Collections.sort(list, (a,b) -> map.get(b) - map.get(a));
-
-
-        // create string builder function
-
-        StringBuilder result = new StringBuilder();
-
-        for(int i= 0; i<list.size(); i++) {
-
-            int freq = map.get(list.get(i));
-
-            for(int j = 0; j< freq ; j++) {
-
-                result.append(list.get(i));
-            }
-
-        }
-
-        return result.toString();
+        StringBuilder sb = new StringBuilder();
         
+        while(pq.size()>0) {
+            pair top = pq.poll();
+            int k = top.freq;
+            for(int i=0; i<k;i++) {
+                sb.append(top.ch);
+            }
+        }
+        return sb.toString();
     }
 }
