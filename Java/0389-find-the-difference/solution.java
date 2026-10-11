@@ -1,33 +1,17 @@
 class Solution {
     public char findTheDifference(String s, String t) {
-
-        HashMap<Character, Integer> map = new HashMap<>();
-
-        for(int i=0;i<s.length();i++){
-
-            char a = s.charAt(i);
-
-            if(map.containsKey(a))
-            {
-                map.put(a, map.get(a)+1);
-            }
-            else{
-                map.put(a,1);
-            }
+        StringBuilder sb = new StringBuilder();
+        for(char ch : s.toCharArray()) {
+            sb.append(ch);
         }
-        for(int i=0;i<t.length();i++) {    
-
-            char b = t.charAt(i);
-
-            if(!map.containsKey(b) || map.get(b) == 0){
-
-               return b; 
-               
-            }    
-              map.put(b,map.get(b) - 1);              
+        for(char ch: t.toCharArray()){
+            sb.append(ch);
         }
-
-        return ' ';     
-        
+        char result = 0;
+        for(int i=0; i<sb.length(); i++) {
+            char ch = sb.charAt(i);
+            result = (char) (result ^ ch);
+        }
+    return result;
     }
 }
