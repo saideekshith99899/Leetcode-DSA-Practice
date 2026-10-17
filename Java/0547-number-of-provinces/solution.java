@@ -5,24 +5,18 @@ class Solution {
         boolean[] visited = new boolean[n]; // false
         for(int i = 0; i<n; i++) {
             if(!visited[i]) {
-                bfs(i,visited,isConnected);
+                dfs(i,visited,isConnected);
                 count++;
             }
         }
         return count;
     }
 
-    public void bfs(int i, boolean[] visited, int[][] isConnected) {
-        Queue<Integer> queue = new LinkedList<>();
-        queue.offer(i);
+    public void dfs(int i, boolean[] visited, int[][] isConnected) {
         visited[i] = true;
-        while(queue.size() > 0) {
-            int node = queue.poll();
-            for(int j=0; j < isConnected.length; j++ ) {
-                if(isConnected[node][j] == 1 && !visited[j]) {
-                    visited[j] = true;
-                    queue.offer(j);
-                }
+        for(int j = 0; j<isConnected.length; j++) {
+            if(isConnected[i][j] == 1 && visited[j] == false) {
+                dfs(j,visited,isConnected);
             }
         }
     }
