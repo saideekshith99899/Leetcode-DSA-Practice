@@ -1,0 +1,24 @@
+
+name: Sync LeetCode Solutions
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync accepted LeetCode submissions
+        uses: joshcai/leetcode-sync@v1.7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          leetcode-csrf-token: ${{ secrets.LEETCODE_CSRF_TOKEN }}
+          leetcode-session: ${{ secrets.LEETCODE_SESSION }}
+          destination-folder: Java
+          verbose: true
+          commit-header: "[LeetCode Sync]"
